@@ -1,0 +1,21 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  build:
+    name: Build and Scan
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build a Docker image
+        run: docker build -t app .
+        working-directory: app
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'app:latest'
+          format: 'table'
