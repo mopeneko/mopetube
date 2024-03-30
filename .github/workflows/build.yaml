@@ -28,7 +28,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.event_name == 'push' }}
       - name: Push image to ghcr.io
         run: |
           docker tag app:${{ github.sha }} ghcr.io/${{ github.actor }}/app:${{ github.sha }}
           docker push ghcr.io/${{ github.actor }}/app:${{ github.sha }}
+        if: ${{ github.event_name == 'push' }}
