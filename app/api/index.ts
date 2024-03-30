@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
 import { remix } from "remix-hono/handler";
 import * as build from "../build/server";
-import app from "./route"
+import app from "./route";
 
 app.use(
 	"*",
