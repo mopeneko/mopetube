@@ -4,7 +4,10 @@
     "build:vite": "remix vite:build",
     "build:hono": "rollup -c",
     "build": "npm run build:vite && npm run build:hono",
-    "start": "node build/api.js"
+    "start": "node build/api.js",
+    "dev": "concurrently \"vite build --watch\" \"tsx --watch api/index.ts\"",
+    "check": "biome check .",
+    "check:apply": "biome check --apply ."
   },
   "dependencies": {
     "@hono/node-server": "^1.9.1",
