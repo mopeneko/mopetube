@@ -2,7 +2,8 @@
   "type": "module",
   "scripts": {
     "build:vite": "remix vite:build",
-    "build:hono": "rollup -c"
+    "build:hono": "rollup -c",
+    "build": "npm run build:vite && npm run build:hono"
   },
   "dependencies": {
     "@hono/node-server": "^1.9.0",
