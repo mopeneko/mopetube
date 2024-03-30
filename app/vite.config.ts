@@ -6,10 +6,5 @@ import tsconfigPaths from "vite-tsconfig-paths";
 installGlobals();
 
 export default defineConfig({
-    server: {
-		watch: {
-			cwd: "app",
-		},
-	},
 	plugins: [remix(), tsconfigPaths()],
 });
