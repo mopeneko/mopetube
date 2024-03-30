@@ -8,6 +8,9 @@ jobs:
   build:
     name: Build, Scan and Push
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
