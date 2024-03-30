@@ -1,6 +1,6 @@
 # mopetube
 
-Video sharing platform with PeerTube
+Video sharing platform with LivePeer
 
 ## Development
 
