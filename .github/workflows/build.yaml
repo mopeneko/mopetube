@@ -12,12 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Build a Docker image
-        run: docker build -t app .
+        run: docker build -t app:${{ github.sha }} .
         working-directory: app
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'app:latest'
+          image-ref: 'app:{{ github.sha }}'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
