@@ -5,7 +5,8 @@ export default {
     input: "api/index.ts",
     output: {
         file: "build/api.js",
-        format: "esm"
+        format: "esm",
+        sourcemap: true
     },
     plugins: [
         typescript(),
