@@ -1,38 +1,38 @@
 {
-  "type": "module",
-  "scripts": {
-    "build:vite": "remix vite:build",
-    "build:hono": "rollup -c",
-    "build": "npm run build:vite && npm run build:hono",
-    "start": "node build/api.js",
-    "dev": "concurrently \"vite build --watch\" \"tsx --watch api/index.ts\"",
-    "check": "biome check .",
-    "check:apply": "biome check --apply ."
-  },
-  "dependencies": {
-    "@hono/node-server": "^1.9.1",
-    "@remix-run/node": "^2.8.1",
-    "@remix-run/react": "^2.8.1",
-    "@remix-run/serve": "^2.8.1",
-    "hono": "^4.1.5",
-    "ip": "2.0.1",
-    "isbot": "^4.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remix-hono": "^0.0.16"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.6.3",
-    "@remix-run/dev": "^2.8.1",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "@types/node": "^20.12.2",
-    "@types/react": "^18.2.73",
-    "@types/react-dom": "^18.2.23",
-    "concurrently": "^8.2.2",
-    "rollup": "^4.13.2",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.7",
-    "vite-tsconfig-paths": "^4.3.2"
-  }
+	"type": "module",
+	"scripts": {
+		"build:vite": "remix vite:build",
+		"build:hono": "rollup -c",
+		"build": "npm run build:vite && npm run build:hono",
+		"start": "node build/api.js",
+		"dev": "concurrently \"vite build --watch\" \"tsx --watch api/index.ts\"",
+		"check": "biome check .",
+		"check:apply": "biome check --apply ."
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.9.1",
+		"@remix-run/node": "^2.8.1",
+		"@remix-run/react": "^2.8.1",
+		"@remix-run/serve": "^2.8.1",
+		"hono": "^4.1.5",
+		"ip": "2.0.1",
+		"isbot": "^4.4.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"remix-hono": "^0.0.16"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.6.3",
+		"@remix-run/dev": "^2.8.1",
+		"@rollup/plugin-commonjs": "^25.0.7",
+		"@rollup/plugin-typescript": "^11.1.6",
+		"@types/node": "^20.12.2",
+		"@types/react": "^18.2.73",
+		"@types/react-dom": "^18.2.23",
+		"concurrently": "^8.2.2",
+		"rollup": "^4.13.2",
+		"typescript": "^5.4.3",
+		"vite": "^5.2.7",
+		"vite-tsconfig-paths": "^4.3.2"
+	}
 }
