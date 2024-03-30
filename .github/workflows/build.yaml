@@ -19,3 +19,5 @@ jobs:
         with:
           image-ref: 'app:latest'
           format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
