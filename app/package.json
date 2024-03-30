@@ -3,7 +3,8 @@
   "scripts": {
     "build:vite": "remix vite:build",
     "build:hono": "rollup -c",
-    "build": "npm run build:vite && npm run build:hono"
+    "build": "npm run build:vite && npm run build:hono",
+    "start": "node build/api.js"
   },
   "dependencies": {
     "@hono/node-server": "^1.9.0",
