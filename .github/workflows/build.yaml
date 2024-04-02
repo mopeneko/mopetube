@@ -3,7 +3,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "app/**"
   pull_request:
+    paths:
+      - "app/**"
 jobs:
   build:
     name: Build, Scan and Push
@@ -20,11 +24,11 @@ jobs:
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'app:${{ github.sha }}'
-          format: 'table'
-          exit-code: '1'
+          image-ref: "app:${{ github.sha }}"
+          format: "table"
+          exit-code: "1"
           ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
+          severity: "CRITICAL,HIGH"
       - name: Login to ghcr.io
         uses: docker/login-action@v3
         with:
