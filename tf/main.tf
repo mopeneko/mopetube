@@ -232,6 +232,9 @@ resource "aws_route53_record" "mopetube_a_record" {
 resource "aws_acm_certificate" "mopetube_certificate" {
     domain_name = "mopetube.com"
     validation_method = "DNS"
+    lifecycle {
+        create_before_destroy = true
+    }
 }
 
 resource "aws_lb_listener" "mopetube_listener" {
