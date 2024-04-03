@@ -7,7 +7,7 @@ variable "github_owner" {
 variable "package_name" {
   type        = string
   description = "Package name"
-  default     = "app"
+  default     = "mopetube"
 }
 
 variable "domain_name" {
