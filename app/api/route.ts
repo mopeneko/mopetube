@@ -3,7 +3,7 @@ import health from "./health";
 
 const app = new Hono();
 
-const api = app.route('/api');
+const api = app.route("/api");
 
 api.route("/health", health);
 
