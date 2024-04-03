@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 data "github_rest_api" "package_versions" {
-  endpoint = "users/mopeneko/packages/container/${var.package_name}/versions"
+  endpoint = "users/${var.github_owner}/packages/container/${var.package_name}/versions"
 }
 
 data "aws_region" "current" {}
