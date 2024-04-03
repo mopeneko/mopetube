@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 installGlobals();
-
+// Edit code for testing
 export default defineConfig({
 	plugins: [remix(), tsconfigPaths()],
 });
