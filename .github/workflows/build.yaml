@@ -45,7 +45,6 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v5
         with:
-          push: true
+          push: ${{ github.event_name == 'push' }}
           tags: ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }},ghcr.io/${{ github.actor }}/mopetube:latest
           platforms: linux/arm64
-        if: ${{ github.event_name == 'push' }}
