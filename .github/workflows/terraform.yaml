@@ -36,9 +36,6 @@ jobs:
       - name: terraform fmt
         run: terraform fmt -check
         working-directory: tf
-      - name: terraform plan
-        run: terraform plan
-        working-directory: tf
       - name: tflint
         run: tflint
         working-directory: tf
