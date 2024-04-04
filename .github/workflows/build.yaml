@@ -46,4 +46,5 @@ jobs:
         run: |
           docker tag mopetube:${{ github.sha }} ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }}
           docker push ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }}
+          docker push ghcr.io/${{ github.actor }}/mopetube:latest
         if: ${{ github.event_name == 'push' }}
