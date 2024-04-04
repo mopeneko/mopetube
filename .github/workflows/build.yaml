@@ -24,9 +24,11 @@ jobs:
           platforms: linux/arm64
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build a Docker image
-        run: docker buildx build --platform linux/arm64 -t mopetube:${{ github.sha }} -t mopetube:latest .
-        working-directory: app
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          tags: ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }},ghcr.io/${{ github.actor }}/mopetube:latest
+          platforms: linux/arm64
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
         with:
@@ -44,9 +46,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and Push
-        uses: docker/build-push-action@v5
-        with:
-          push: ${{ github.event_name == 'push' }}
-          tags: ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }},ghcr.io/${{ github.actor }}/mopetube:latest
-          platforms: linux/arm64
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }}
+          docker push ghcr.io/${{ github.actor }}/mopetube:latest
