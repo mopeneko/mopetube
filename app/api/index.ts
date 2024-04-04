@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { remix } from "remix-hono/handler";
 import * as build from "../build/server";
 import app from "./route";
-import { serveStatic } from "@hono/node-server/serve-static";
 
 app.use(
 	"*",
