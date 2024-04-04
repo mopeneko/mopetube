@@ -21,7 +21,8 @@ locals {
 }
 
 resource "aws_vpc" "mopetube_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block                       = "10.0.0.0/16"
+  assign_generated_ipv6_cidr_block = true
 }
 
 resource "aws_kms_key" "mopetube_key" {
@@ -46,7 +47,12 @@ resource "aws_kms_key" "mopetube_key" {
 }
 
 resource "aws_cloudwatch_log_group" "mopetube_log_group" {
-  name       = "mopetube-log-group"
+  name       = "mopetube-log-group-flow-log"
+  kms_key_id = aws_kms_key.mopetube_key.arn
+}
+
+resource "aws_cloudwatch_log_group" "mopetube_log_group_app" {
+  name       = "mopetube-log-group-app"
   kms_key_id = aws_kms_key.mopetube_key.arn
 }
 
@@ -62,12 +68,21 @@ resource "aws_subnet" "mopetube_subnet" {
   vpc_id            = aws_vpc.mopetube_vpc.id
   cidr_block        = "10.0.0.0/24"
   availability_zone = "ap-northeast-1a"
+  ipv6_cidr_block   = cidrsubnet(aws_vpc.mopetube_vpc.ipv6_cidr_block, 4, 1)
 }
 
 resource "aws_subnet" "mopetube_subnet_b" {
   vpc_id            = aws_vpc.mopetube_vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-northeast-1c"
+  ipv6_cidr_block   = cidrsubnet(aws_vpc.mopetube_vpc.ipv6_cidr_block, 4, 2)
+}
+
+resource "aws_subnet" "mopetube_subnet_d" {
+  vpc_id            = aws_vpc.mopetube_vpc.id
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "ap-northeast-1d"
+  ipv6_cidr_block   = cidrsubnet(aws_vpc.mopetube_vpc.ipv6_cidr_block, 4, 3)
 }
 
 resource "aws_internet_gateway" "mopetube_igw" {
@@ -81,6 +96,11 @@ resource "aws_route_table" "mopetube_route_table" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.mopetube_igw.id
   }
+
+  route {
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.mopetube_igw.id
+  }
 }
 
 resource "aws_route_table_association" "mopetube_route_table_association" {
@@ -93,16 +113,22 @@ resource "aws_route_table_association" "mopetube_route_table_association_b" {
   subnet_id      = aws_subnet.mopetube_subnet_b.id
 }
 
+resource "aws_route_table_association" "mopetube_route_table_association_d" {
+  route_table_id = aws_route_table.mopetube_route_table.id
+  subnet_id      = aws_subnet.mopetube_subnet_d.id
+}
+
 resource "aws_security_group" "mopetube_security_group" {
   name        = "mopetube-security-group"
   description = "Security group for mopetube"
   vpc_id      = aws_vpc.mopetube_vpc.id
   egress {
-    description = "Allow HTTPS traffic"
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr
+    description      = "Allow HTTPS traffic"
+    from_port        = 0
+    to_port          = 65535
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -111,11 +137,12 @@ resource "aws_security_group" "mopetube_ecs_security_group" {
   description = "Security group for mopetube ECS"
   vpc_id      = aws_vpc.mopetube_vpc.id
   egress {
-    description = "Allow HTTP traffic"
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr
+    description      = "Allow HTTP traffic"
+    from_port        = 0
+    to_port          = 65535
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -123,6 +150,7 @@ resource "aws_security_group_rule" "mopetube_security_group_rule" {
   description       = "Allow HTTP traffic"
   security_group_id = aws_security_group.mopetube_security_group.id
   cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-ingress-sgr
+  ipv6_cidr_blocks  = ["::/0"]
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
@@ -133,6 +161,7 @@ resource "aws_security_group_rule" "mopetube_ecs_security_group_rule" {
   description       = "Allow HTTP traffic"
   security_group_id = aws_security_group.mopetube_ecs_security_group.id
   cidr_blocks       = ["10.0.0.0/16"]
+  ipv6_cidr_blocks  = [aws_vpc.mopetube_vpc.ipv6_cidr_block]
   from_port         = 3000
   to_port           = 3000
   protocol          = "tcp"
@@ -142,9 +171,10 @@ resource "aws_security_group_rule" "mopetube_ecs_security_group_rule" {
 resource "aws_lb" "mopetube_lb" {
   name                       = "mopetube-lb"
   security_groups            = [aws_security_group.mopetube_security_group.id]
-  subnets                    = [aws_subnet.mopetube_subnet.id, aws_subnet.mopetube_subnet_b.id]
+  subnets                    = [aws_subnet.mopetube_subnet.id, aws_subnet.mopetube_subnet_b.id, aws_subnet.mopetube_subnet_d.id]
   drop_invalid_header_fields = true
   internal                   = false #tfsec:ignore:aws-elb-alb-not-public
+  ip_address_type            = "dualstack"
 }
 
 resource "aws_ecs_task_definition" "mopetube_task_definition" {
@@ -176,6 +206,14 @@ resource "aws_ecs_task_definition" "mopetube_task_definition" {
       ]
       repositoryCredentials = {
         credentialsParameter = aws_secretsmanager_secret.mopetube_github_token.arn
+      }
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.mopetube_log_group_app.name
+          awslogs-region        = local.region
+          awslogs-stream-prefix = "mopetube-app"
+        }
       }
     }
   ])
@@ -226,6 +264,17 @@ resource "aws_route53_record" "validation" {
 resource "aws_route53_record" "mopetube_a_record" {
   name    = var.domain_name
   type    = "A"
+  zone_id = aws_route53_zone.mopetube_zone.id
+  alias {
+    name                   = aws_lb.mopetube_lb.dns_name
+    zone_id                = aws_lb.mopetube_lb.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "mopetube_aaaa_record" {
+  name    = var.domain_name
+  type    = "AAAA"
   zone_id = aws_route53_zone.mopetube_zone.id
   alias {
     name                   = aws_lb.mopetube_lb.dns_name
@@ -295,7 +344,7 @@ resource "aws_ecs_service" "mopetube_service" {
   desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
-    subnets          = [aws_subnet.mopetube_subnet.id, aws_subnet.mopetube_subnet_b.id]
+    subnets          = [aws_subnet.mopetube_subnet.id, aws_subnet.mopetube_subnet_b.id, aws_subnet.mopetube_subnet_d.id]
     security_groups  = [aws_security_group.mopetube_ecs_security_group.id]
     assign_public_ip = true
   }
