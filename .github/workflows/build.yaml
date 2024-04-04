@@ -25,7 +25,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Build a Docker image
-        run: docker buildx build --platform linux/arm64 -t mopetube:${{ github.sha }} .
+        run: docker buildx build --platform linux/arm64 -t mopetube:${{ github.sha }} -t mopetube:latest .
         working-directory: app
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
