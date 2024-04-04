@@ -1,0 +1,45 @@
+name: Terraform
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - tf/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tf/**
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+      - name: terraform init
+        run: terraform init
+        working-directory: tf
+      - name: tflint init
+        run: tflint --init
+        working-directory: tf
+      - name: terraform validate
+        run: terraform validate
+        working-directory: tf
+      - name: terraform fmt
+        run: terraform fmt -check
+        working-directory: tf
+      - name: terraform plan
+        run: terraform plan
+        working-directory: tf
+      - name: tflint
+        run: tflint
+        working-directory: tf
+      - name: Setup tfsec
+        uses: aquasecurity/tfsec-action@v1
+        with:
+          working-directory: tf
