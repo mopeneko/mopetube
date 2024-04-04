@@ -159,6 +159,11 @@ resource "aws_ecs_task_definition" "mopetube_task_definition" {
 
   execution_role_arn = var.ecs_task_execution_role_arn
 
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64"
+  }
+
   container_definitions = jsonencode([
     {
       name  = "mopetube"
