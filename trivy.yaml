@@ -1,8 +1,6 @@
 format: sarif
 output: trivy-results.sarif
 exit-code: 1
-image:
-  platform: linux/arm64
 vulnerability:
   severity:
     - HIGH
