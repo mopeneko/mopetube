@@ -27,6 +27,7 @@ jobs:
       - name: Build
         uses: docker/build-push-action@v5
         with:
+          context: "{{ defaultContext }}:app"
           tags: ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }},ghcr.io/${{ github.actor }}/mopetube:latest
           platforms: linux/arm64
       - name: Run Trivy
