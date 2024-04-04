@@ -38,6 +38,8 @@ COPY --from=prod-deps /app/node_modules ./node_modules
 
 COPY --from=build /app/build/api.js .
 
+COPY --from=build /app/build/client ./build/client
+
 COPY package.json .
 
 CMD ["api.js"]

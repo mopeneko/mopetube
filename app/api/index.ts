@@ -2,9 +2,11 @@ import { serve } from "@hono/node-server";
 import { remix } from "remix-hono/handler";
 import * as build from "../build/server";
 import app from "./route";
+import { serveStatic } from "@hono/node-server/serve-static";
 
 app.use(
 	"*",
+	serveStatic({ root: "./build/client" }),
 	remix({
 		build,
 		mode: process.env.NODE_ENV as "development" | "production",
