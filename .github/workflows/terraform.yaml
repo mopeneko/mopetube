@@ -5,11 +5,14 @@ on:
       - main
     paths:
       - tf/**
+      - .github/workflows/terraform.yaml
   pull_request:
     branches:
       - main
     paths:
       - tf/**
+      - .github/workflows/terraform.yaml
+
 jobs:
   terraform:
     name: Terraform
