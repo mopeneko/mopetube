@@ -28,12 +28,12 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: app
+          load: true
           tags: ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }},ghcr.io/${{ github.actor }}/mopetube:latest
           platforms: linux/arm64
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          load: true
           image-ref: "ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }}"
           trivy-config: trivy.yaml
         env:
