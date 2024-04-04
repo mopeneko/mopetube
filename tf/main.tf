@@ -341,7 +341,7 @@ resource "aws_ecs_service" "mopetube_service" {
   depends_on      = [aws_lb_listener.mopetube_listener]
   cluster         = aws_ecs_cluster.mopetube_cluster.id
   task_definition = aws_ecs_task_definition.mopetube_task_definition.id
-  desired_count   = 1
+  desired_count   = 0
   launch_type     = "FARGATE"
   network_configuration {
     subnets          = [aws_subnet.mopetube_subnet.id, aws_subnet.mopetube_subnet_b.id, aws_subnet.mopetube_subnet_d.id]
@@ -352,5 +352,9 @@ resource "aws_ecs_service" "mopetube_service" {
     target_group_arn = aws_lb_target_group.mopetube_target_group.arn
     container_name   = "mopetube"
     container_port   = "3000"
+  }
+
+  lifecycle {
+    ignore_changes = [task_definition, desired_count]
   }
 }
