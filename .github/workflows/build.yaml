@@ -48,6 +48,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.event_name == 'push' }}
       - name: Push image
         run: |
           docker push ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }}
