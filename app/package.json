@@ -5,7 +5,6 @@
 		"build:hono": "rollup -c",
 		"build": "npm run build:vite && npm run build:hono",
 		"start": "node build/api.js",
-		"dev": "concurrently \"vite build --watch\" \"tsx --watch api/index.ts\"",
 		"check": "biome check .",
 		"check:apply": "biome check --apply ."
 	},
@@ -14,6 +13,7 @@
 		"@remix-run/node": "^2.8.1",
 		"@remix-run/react": "^2.8.1",
 		"@remix-run/serve": "^2.8.1",
+		"@remix-run/server-runtime": "^2.8.1",
 		"hono": "^4.1.5",
 		"ip": "2.0.1",
 		"isbot": "^4.4.0",
