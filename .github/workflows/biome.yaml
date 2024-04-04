@@ -1,0 +1,25 @@
+name: Biome
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - app/**
+  pull_request:
+    paths:
+      - app/**
+
+jobs:
+  format:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          working-dir: app
+      - name: Run biome
+        run: biome ci .
+        working-directory: app
