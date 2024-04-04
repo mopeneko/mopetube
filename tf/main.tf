@@ -172,6 +172,10 @@ resource "aws_ecs_task_definition" "mopetube_task_definition" {
       repositoryCredentials = {
         credentialsParameter = aws_secretsmanager_secret.mopetube_github_token.arn
       }
+      runtimePlatform = {
+        operatingSystemFamily = "LINUX"
+        cpuArchitecture       = "ARM64"
+      }
     }
   ])
 }
