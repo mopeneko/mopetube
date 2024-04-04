@@ -1,9 +1,9 @@
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { createRequestHandler } from "@remix-run/server-runtime";
+import pino from "pino";
 import * as build from "../build/server";
 import app from "./route";
-import pino from "pino";
 
 const logger = pino();
 
