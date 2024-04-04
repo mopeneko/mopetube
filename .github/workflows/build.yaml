@@ -33,6 +33,7 @@ jobs:
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
         with:
+          load: true
           image-ref: "ghcr.io/${{ github.actor }}/mopetube:${{ github.sha }}"
           trivy-config: trivy.yaml
         env:
