@@ -5,9 +5,11 @@ on:
       - main
     paths:
       - "app/**"
+      - ".github/workflows/build.yaml"
   pull_request:
     paths:
       - "app/**"
+      - ".github/workflows/build.yaml"
 jobs:
   build:
     name: Build, Scan and Push
@@ -16,10 +18,14 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/arm64
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Build a Docker image
-        run: docker build -t mopetube:${{ github.sha }} .
+        run: docker buildx build --platform linux/arm64 -t mopetube:${{ github.sha }} .
         working-directory: app
       - name: Run Trivy
         uses: aquasecurity/trivy-action@master
