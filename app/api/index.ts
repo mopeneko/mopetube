@@ -9,12 +9,12 @@ const logger = pino();
 app.use("*", serveStatic({ root: "./build/client" }));
 
 const viteDevServer =
-	process.env.NODE_ENV === "production"
-		? undefined
-		: await (await import("vite")).createServer({
+	process.env.NODE_ENV === "development"
+		? await (await import("vite")).createServer({
 				server: { middlewareMode: true },
 				appType: "custom",
-			});
+			})
+		: undefined;
 
 app.use("*", async (c) => {
 	try {
