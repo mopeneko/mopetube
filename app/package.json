@@ -5,6 +5,7 @@
 		"build:hono": "rollup -c",
 		"build": "npm run build:vite && npm run build:hono",
 		"start": "node build/api.js",
+		"dev": "vite",
 		"check": "biome check .",
 		"check:apply": "biome check --apply ."
 	},
@@ -24,6 +25,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.6.3",
+		"@hono/vite-dev-server": "^0.10.0",
 		"@remix-run/dev": "^2.8.1",
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-typescript": "^11.1.6",
