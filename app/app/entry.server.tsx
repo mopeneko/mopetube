@@ -30,12 +30,14 @@ export default function handleRequest(
 				responseStatusCode,
 				responseHeaders,
 				remixContext,
+				loadContext,
 			)
 		: handleBrowserRequest(
 				request,
 				responseStatusCode,
 				responseHeaders,
 				remixContext,
+				loadContext,
 			);
 }
 
@@ -44,6 +46,7 @@ function handleBotRequest(
 	responseStatusCode_: number,
 	responseHeaders: Headers,
 	remixContext: EntryContext,
+	loadContext: AppLoadContext,
 ) {
 	let responseStatusCode = responseStatusCode_;
 	return new Promise((resolve, reject) => {
@@ -72,6 +75,7 @@ function handleBotRequest(
 					pipe(body);
 				},
 				onShellError(error: unknown) {
+					loadContext.logger.error(error);
 					reject(error);
 				},
 				onError(error: unknown) {
@@ -94,6 +98,7 @@ function handleBrowserRequest(
 	responseStatusCode_: number,
 	responseHeaders: Headers,
 	remixContext: EntryContext,
+	loadContext: AppLoadContext,
 ) {
 	let responseStatusCode = responseStatusCode_;
 	return new Promise((resolve, reject) => {
@@ -122,6 +127,7 @@ function handleBrowserRequest(
 					pipe(body);
 				},
 				onShellError(error: unknown) {
+					loadContext.logger.error(error);
 					reject(error);
 				},
 				onError(error: unknown) {
