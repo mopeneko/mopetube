@@ -4,7 +4,7 @@
 		"build:vite": "remix vite:build",
 		"build:hono": "rollup -c",
 		"build": "npm run build:vite && npm run build:hono",
-		"start": "node build/api.js",
+		"start": "cross-env NODE_ENV=production node build/api/index.js",
 		"dev": "vite",
 		"check": "biome check .",
 		"check:apply": "biome check --apply ."
@@ -33,6 +33,7 @@
 		"@types/react": "^18.2.73",
 		"@types/react-dom": "^18.2.23",
 		"concurrently": "^8.2.2",
+		"cross-env": "^7.0.3",
 		"rollup": "^4.13.2",
 		"tsx": "^4.7.2",
 		"vite": "^5.2.7",
