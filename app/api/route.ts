@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import health from "./health";
+import health from "./health/index.js";
 
 const app = new Hono();
 

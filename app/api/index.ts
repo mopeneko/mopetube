@@ -2,15 +2,26 @@ import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { createRequestHandler } from "@remix-run/server-runtime";
 import pino from "pino";
-import * as build from "../build/server";
-import app from "./route";
+import app from "./route.js";
 
 const logger = pino();
 
 app.use("*", serveStatic({ root: "./build/client" }));
 
-app.all("*", async (c) => {
+const viteDevServer =
+	process.env.NODE_ENV === "development"
+		? await (await import("vite")).createServer({
+				server: { middlewareMode: true },
+				appType: "custom",
+			})
+		: undefined;
+
+app.use("*", async (c) => {
 	try {
+		const build =
+			process.env.NODE_ENV === "production"
+				? await import("../build/server/index.js")
+				: await viteDevServer?.ssrLoadModule("virtual:remix/server-build");
 		return await createRequestHandler(build, process.env.NODE_ENV)(c.req.raw, {
 			logger,
 		});
@@ -21,10 +32,14 @@ app.all("*", async (c) => {
 	}
 });
 
-const port = 3000;
-console.log(`Server is running on port ${port}`);
+if (process.env.NODE_ENV === "production") {
+	const port = Number.parseInt(process.env.PORT ?? "3000");
+	console.log(`Server is running on port ${port}`);
 
-serve({
-	fetch: app.fetch,
-	port,
-});
+	serve({
+		fetch: app.fetch,
+		port,
+	});
+}
+
+export default app;

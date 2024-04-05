@@ -4,9 +4,8 @@ import typescript from "@rollup/plugin-typescript";
 export default {
 	input: "api/index.ts",
 	output: {
-		file: "build/api.js",
+		dir: "build/api",
 		format: "esm",
-		sourcemap: true,
 	},
 	plugins: [typescript(), commonjs()],
 };
