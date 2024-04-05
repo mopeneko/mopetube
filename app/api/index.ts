@@ -33,7 +33,7 @@ app.use("*", async (c) => {
 });
 
 if (process.env.NODE_ENV === "production") {
-	const port = 3000;
+	const port = Number.parseInt(process.env.PORT ?? "3000");
 	console.log(`Server is running on port ${port}`);
 
 	serve({
