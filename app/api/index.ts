@@ -15,6 +15,8 @@ app.all("*", async (c) => {
 			logger,
 		});
 	} catch (error) {
+		c.status(500);
+		c.text("Internal Server Error");
 		logger.error(error);
 	}
 });
