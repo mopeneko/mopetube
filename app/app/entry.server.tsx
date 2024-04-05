@@ -136,7 +136,6 @@ function handleBrowserRequest(
 					// errors encountered during initial shell rendering since they'll
 					// reject and get logged in handleDocumentRequest.
 					if (shellRendered) {
-						console.error(error);
 					}
 				},
 			},
