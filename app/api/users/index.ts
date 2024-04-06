@@ -4,10 +4,10 @@ import { db } from "api/db/connection.js";
 import { users } from "api/db/schema.js";
 import { logger } from "api/logger.js";
 import argon2 from "argon2";
+import { count } from "drizzle-orm";
 import { Hono } from "hono";
 import { ulid } from "ulid";
 import { z } from "zod";
-import { count } from "drizzle-orm";
 
 const app = new Hono();
 
