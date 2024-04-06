@@ -40,8 +40,9 @@ COPY --from=build /app/build/api .
 
 COPY --from=build /app/build/client ./build/client
 
-COPY package.json .
+COPY package.json certs ./
 
 ENV NODE_ENV=production
+ENV CA_PATH=/app/certs/isrgrootx1.pem
 
 CMD ["index.js"]
