@@ -366,7 +366,7 @@ resource "aws_secretsmanager_secret" "mopetube_pepper" {
 }
 
 resource "aws_secretsmanager_secret_version" "mopetube_pepper_version" {
-  secret_id     = aws_secretsmanager_secret.mopetube_db_pass.id
+  secret_id     = aws_secretsmanager_secret.mopetube_pepper.id
   secret_string = var.pepper
 }
 
