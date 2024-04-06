@@ -4,10 +4,8 @@ import {
 	type ServerBuild,
 	createRequestHandler,
 } from "@remix-run/server-runtime";
-import { pino } from "pino";
+import { logger } from "./logger.js";
 import app from "./route.js";
-
-const logger = pino();
 
 app.use("*", serveStatic({ root: "./build/client" }));
 
