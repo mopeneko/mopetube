@@ -7,6 +7,7 @@ import argon2 from "argon2";
 import { Hono } from "hono";
 import { ulid } from "ulid";
 import { z } from "zod";
+import { count } from "drizzle-orm";
 
 const app = new Hono();
 
@@ -20,19 +21,34 @@ app.post(
 		}),
 	),
 	async (c) => {
+		const cnt = await db.select({ value: count() }).from(users);
+
+		if (cnt.length !== 1) {
+			return c.json({ message: "Internal Server Error" }, 500);
+		}
+
+		if (cnt[0].value !== 0) {
+			return c.json({ message: "first user has already been created" });
+		}
+
 		const { username, password } = c.req.valid("json");
+
 		const pepper = process.env.PEPPER;
 		if (!pepper) {
 			logger.error("PEPPER is not set");
 			return c.json({ message: "Internal Server Error" }, 500);
 		}
+
 		const hash = await argon2.hash(password, { secret: Buffer.from(pepper) });
+
 		const id = ulid();
+
 		await db.insert(users).values({
 			id,
 			username,
 			hash,
 		});
+
 		logger.info(`User ${username} created`);
 		return c.json({ id, username });
 	},
