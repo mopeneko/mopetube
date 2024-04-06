@@ -223,6 +223,7 @@ resource "aws_ecs_task_definition" "mopetube_task_definition" {
       ]
       secrets = [
         { name = "DB_PASS", valueFrom = aws_secretsmanager_secret.mopetube_db_pass.arn },
+        { name = "PEPPER", valueFrom = aws_secretsmanager_secret.mopetube_pepper.arn },
       ]
     }
   ])
@@ -355,6 +356,18 @@ resource "aws_secretsmanager_secret" "mopetube_db_pass" {
 resource "aws_secretsmanager_secret_version" "mopetube_db_pass_version" {
   secret_id     = aws_secretsmanager_secret.mopetube_db_pass.id
   secret_string = var.db_pass
+}
+
+resource "aws_secretsmanager_secret" "mopetube_pepper" {
+  name                    = "mopetube-pepper"
+  description             = "Pepper for hashing"
+  recovery_window_in_days = 10
+  kms_key_id              = aws_kms_key.mopetube_key.arn
+}
+
+resource "aws_secretsmanager_secret_version" "mopetube_pepper_version" {
+  secret_id     = aws_secretsmanager_secret.mopetube_db_pass.id
+  secret_string = var.pepper
 }
 
 resource "aws_ecs_service" "mopetube_service" {
