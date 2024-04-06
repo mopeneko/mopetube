@@ -222,7 +222,7 @@ resource "aws_ecs_task_definition" "mopetube_task_definition" {
         { name = "DB_NAME", value = var.db_name },
       ]
       secrets = [
-        { name = "DB_PASS", value = aws_secretsmanager_secret.mopetube_db_pass.arn },
+        { name = "DB_PASS", valueFrom = aws_secretsmanager_secret.mopetube_db_pass.arn },
       ]
     }
   ])
