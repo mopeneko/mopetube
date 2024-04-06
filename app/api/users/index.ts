@@ -1,4 +1,3 @@
-import crypto from "node:crypto";
 import { zValidator } from "@hono/zod-validator";
 import { db } from "api/db/connection.js";
 import { users } from "api/db/schema.js";
