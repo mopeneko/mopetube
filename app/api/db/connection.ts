@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 
-export const connection = await mysql.createConnection({
+export const connection = mysql.createPool({
 	host: process.env.DB_HOST,
 	port: process.env.DB_PORT
 		? Number.parseInt(process.env.DB_PORT, 10)
