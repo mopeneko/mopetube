@@ -1,6 +1,6 @@
+import fs from "node:fs";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-import fs from "node:fs";
 
 const connection = await mysql.createConnection({
 	host: process.env.DB_HOST,
