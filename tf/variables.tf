@@ -55,3 +55,8 @@ variable "db_name" {
   type        = string
   description = "Database name"
 }
+
+variable "pepper" {
+  type        = string
+  description = "Pepper for hashing"
+}
