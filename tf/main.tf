@@ -215,6 +215,15 @@ resource "aws_ecs_task_definition" "mopetube_task_definition" {
           awslogs-stream-prefix = "mopetube-app"
         }
       }
+      environment = [
+        { name = "DB_HOST", value = var.db_host },
+        { name = "DB_PORT", value = var.db_port },
+        { name = "DB_USER", value = var.db_user },
+        { name = "DB_NAME", value = var.db_name },
+      ]
+      secrets = [
+        { name = "DB_PASS", valueFrom = aws_secretsmanager_secret.mopetube_db_pass.arn },
+      ]
     }
   ])
 }
@@ -334,6 +343,18 @@ resource "aws_secretsmanager_secret_version" "mopetube_github_token_version" {
     username = var.github_owner
     password = var.github_token
   })
+}
+
+resource "aws_secretsmanager_secret" "mopetube_db_pass" {
+  name                    = "mopetube-db-pass"
+  description             = "Database password for mopetube"
+  recovery_window_in_days = 10
+  kms_key_id              = aws_kms_key.mopetube_key.arn
+}
+
+resource "aws_secretsmanager_secret_version" "mopetube_db_pass_version" {
+  secret_id     = aws_secretsmanager_secret.mopetube_db_pass.id
+  secret_string = var.db_pass
 }
 
 resource "aws_ecs_service" "mopetube_service" {

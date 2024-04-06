@@ -30,3 +30,28 @@ variable "github_token" {
   type        = string
   description = "GitHub token"
 }
+
+variable "db_host" {
+  type        = string
+  description = "Database host"
+}
+
+variable "db_port" {
+  type        = string
+  description = "Database port"
+}
+
+variable "db_user" {
+  type        = string
+  description = "Database user"
+}
+
+variable "db_pass" {
+  type        = string
+  description = "Database password"
+}
+
+variable "db_name" {
+  type        = string
+  description = "Database name"
+}
