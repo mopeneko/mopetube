@@ -1,7 +1,10 @@
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { createRequestHandler } from "@remix-run/server-runtime";
-import pino from "pino";
+import {
+	type ServerBuild,
+	createRequestHandler,
+} from "@remix-run/server-runtime";
+import { pino } from "pino";
 import app from "./route.js";
 
 const logger = pino();
@@ -21,7 +24,9 @@ app.use("*", async (c) => {
 		const build =
 			process.env.NODE_ENV === "production"
 				? await import("../build/server/index.js")
-				: await viteDevServer?.ssrLoadModule("virtual:remix/server-build");
+				: ((await viteDevServer?.ssrLoadModule(
+						"virtual:remix/server-build",
+					)) as ServerBuild);
 		return await createRequestHandler(build, process.env.NODE_ENV)(c.req.raw, {
 			logger,
 		});
