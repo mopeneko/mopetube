@@ -5,3 +5,6 @@ export const users = mysqlTable("users", {
 	username: varchar("username", { length: 32 }).unique().notNull(),
 	hash: varchar("hash", { length: 255 }).notNull(),
 });
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;

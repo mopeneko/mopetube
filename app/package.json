@@ -25,7 +25,9 @@
 		"pino": "^8.19.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"reflect-metadata": "^0.2.2",
 		"remix-hono": "^0.0.16",
+		"tsyringe": "^4.8.0",
 		"ulid": "^2.3.0",
 		"zod": "^3.22.4"
 	},
