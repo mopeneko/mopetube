@@ -18,6 +18,11 @@ app.post(
 			username: z.string().min(1).max(32),
 			password: z.string().min(1),
 		}),
+		(result, c) => {
+			if (!result.success) {
+				return c.json({ message: "Bad Request" }, 400);
+			}
+		},
 	),
 	async (c) => {
 		const cnt = await db.select({ value: count() }).from(users);
