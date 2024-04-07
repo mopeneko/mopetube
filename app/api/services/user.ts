@@ -1,11 +1,11 @@
 import { APIError } from "api/api_error.js";
 import type { DB } from "api/db/connection.js";
-import { users, type NewUser } from "api/db/schema.js";
-import type { Logger } from "pino";
+import { type NewUser, users } from "api/db/schema.js";
 import * as argon2 from "argon2";
-import { ulid } from "ulid";
 import { count } from "drizzle-orm";
+import type { Logger } from "pino";
 import { inject, injectable } from "tsyringe";
+import { ulid } from "ulid";
 
 @injectable()
 export class UserService {
