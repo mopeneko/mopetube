@@ -30,7 +30,7 @@ COPY . .
 
 RUN pnpm run build
 
-FROM gcr.io/distroless/nodejs20-debian12
+FROM gcr.io/distroless/nodejs20-debian12:debug
 
 WORKDIR /app
 
@@ -40,7 +40,9 @@ COPY --from=build /app/build/api .
 
 COPY --from=build /app/build/client ./build/client
 
-COPY package.json certs ./
+COPY package.json ./
+
+COPY certs certs
 
 ENV NODE_ENV=production
 ENV CA_PATH=/app/certs/isrgrootx1.pem
