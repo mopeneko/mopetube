@@ -30,7 +30,7 @@ COPY . .
 
 RUN pnpm run build
 
-FROM gcr.io/distroless/nodejs20-debian12:debug
+FROM gcr.io/distroless/nodejs20-debian12
 
 WORKDIR /app
 
