@@ -8,6 +8,8 @@ RUN corepack enable
 
 FROM base AS prod-deps
 
+ENV NODE_ENV=production
+
 COPY pnpm-lock.yaml .
 
 RUN pnpm fetch --prod
@@ -17,6 +19,8 @@ COPY package.json .
 RUN pnpm install --offline --prod
 
 FROM base AS build
+
+ENV NODE_ENV=development
 
 COPY pnpm-lock.yaml .
 
@@ -40,7 +44,9 @@ COPY --from=build /app/build/api .
 
 COPY --from=build /app/build/client ./build/client
 
-COPY package.json certs ./
+COPY package.json ./
+
+COPY --chmod=600 certs certs
 
 ENV NODE_ENV=production
 ENV CA_PATH=/app/certs/isrgrootx1.pem
