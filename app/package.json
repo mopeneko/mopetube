@@ -10,7 +10,7 @@
 		"check:apply": "biome check --apply ."
 	},
 	"dependencies": {
-		"@hono/node-server": "^1.9.1",
+		"@hono/node-server": "^1.10.1",
 		"@hono/zod-validator": "^0.2.1",
 		"@remix-run/node": "^2.8.1",
 		"@remix-run/react": "^2.8.1",
