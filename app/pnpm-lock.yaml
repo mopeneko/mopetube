@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@hono/node-server':
-    specifier: ^1.9.1
-    version: 1.9.1
+    specifier: ^1.10.1
+    version: 1.10.1
   '@hono/zod-validator':
     specifier: ^0.2.1
     version: 0.2.1(hono@4.1.5)(zod@3.22.4)
@@ -1433,8 +1433,8 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@hono/node-server@1.9.1:
-    resolution: {integrity: sha512-XBru0xbtRlTZJyAiFJLn7XDKbCVXBaRhVQAQhB9TwND2gwj8jf9SDWIj/7VxVtNAjURJf7Ofcz58DRA6DPYiWA==}
+  /@hono/node-server@1.10.1:
+    resolution: {integrity: sha512-5BKW25JH5PQKPDkTcIgv3yNUPtOAbnnjFFgWvIxxAY/B/ZNeYjjWoAeDmqhIiCgOAJ3Tauuw+0G+VainhuZRYQ==}
     engines: {node: '>=18.14.1'}
 
   /@hono/vite-dev-server@0.10.0(hono@4.1.5):
@@ -1443,7 +1443,7 @@ packages:
     peerDependencies:
       hono: '*'
     dependencies:
-      '@hono/node-server': 1.9.1
+      '@hono/node-server': 1.10.1
       hono: 4.1.5
       miniflare: 3.20240404.0
       minimatch: 9.0.4
