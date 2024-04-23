@@ -10,7 +10,7 @@ dependencies:
     version: 1.9.1
   '@hono/zod-validator':
     specifier: ^0.2.1
-    version: 0.2.1(hono@4.1.5)(zod@3.22.4)
+    version: 0.2.1(hono@4.2.7)(zod@3.22.4)
   '@remix-run/node':
     specifier: ^2.8.1
     version: 2.8.1(typescript@5.4.3)
@@ -30,8 +30,8 @@ dependencies:
     specifier: ^0.30.7
     version: 0.30.7(@types/react@18.2.73)(mysql2@3.9.3)(react@18.2.0)
   hono:
-    specifier: ^4.1.5
-    version: 4.1.5
+    specifier: ^4.2.7
+    version: 4.2.7
   ip:
     specifier: 2.0.1
     version: 2.0.1
@@ -72,7 +72,7 @@ devDependencies:
     version: 1.6.3
   '@hono/vite-dev-server':
     specifier: ^0.10.0
-    version: 0.10.0(hono@4.1.5)
+    version: 0.10.0(hono@4.2.7)
   '@remix-run/dev':
     specifier: ^2.8.1
     version: 2.8.1(@remix-run/serve@2.8.1)(@types/node@20.12.2)(typescript@5.4.3)(vite@5.2.7)
@@ -1437,14 +1437,14 @@ packages:
     resolution: {integrity: sha512-XBru0xbtRlTZJyAiFJLn7XDKbCVXBaRhVQAQhB9TwND2gwj8jf9SDWIj/7VxVtNAjURJf7Ofcz58DRA6DPYiWA==}
     engines: {node: '>=18.14.1'}
 
-  /@hono/vite-dev-server@0.10.0(hono@4.1.5):
+  /@hono/vite-dev-server@0.10.0(hono@4.2.7):
     resolution: {integrity: sha512-JWqdgH59x/PKDrwVCS5EW4eOL4fV+JOuzlKgaHk5eQUgE9vkPwyWwmf8f8rXjsXt5zxOKS3XMlf8sZeglFg3hw==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: '*'
     dependencies:
       '@hono/node-server': 1.9.1
-      hono: 4.1.5
+      hono: 4.2.7
       miniflare: 3.20240404.0
       minimatch: 9.0.4
     transitivePeerDependencies:
@@ -1453,13 +1453,13 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@hono/zod-validator@0.2.1(hono@4.1.5)(zod@3.22.4):
+  /@hono/zod-validator@0.2.1(hono@4.2.7)(zod@3.22.4):
     resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
-      hono: 4.1.5
+      hono: 4.2.7
       zod: 3.22.4
     dev: false
 
@@ -3581,8 +3581,8 @@ packages:
     resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
     dev: true
 
-  /hono@4.1.5:
-    resolution: {integrity: sha512-3ChJiIoeCxvkt6vnkxJagplrt1YZg3NyNob7ssVeK2PUqEINp4q1F94HzFnvY9QE8asVmbW5kkTDlyWylfg2vg==}
+  /hono@4.2.7:
+    resolution: {integrity: sha512-k1xHi86tJnRIVvqhFMBDGFKJ8r5O+bEsT4P59ZK59r0F300Xd910/r237inVfuT/VmE86RQQffX4OYNda6dLXw==}
     engines: {node: '>=16.0.0'}
 
   /hosted-git-info@6.1.1:
@@ -5286,7 +5286,7 @@ packages:
         optional: true
     dependencies:
       '@remix-run/server-runtime': 2.8.1(typescript@5.4.3)
-      hono: 4.1.5
+      hono: 4.2.7
       pretty-cache-header: 1.0.0
       zod: 3.22.4
     transitivePeerDependencies:
